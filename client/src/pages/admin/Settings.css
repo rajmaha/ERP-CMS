@@ -1,0 +1,17 @@
+.form-subsection {
+  margin-top: 1.5rem;
+  padding: 1.5rem;
+  background: var(--bg-light);
+  border-radius: 8px;
+  border-left: 4px solid var(--primary-color);
+}
+
+.form-subsection h4 {
+  margin: 0 0 1rem 0;
+  color: var(--text-color);
+  font-size: 1rem;
+}
+
+.form-subsection:first-of-type {
+  margin-top: 1rem;
+}

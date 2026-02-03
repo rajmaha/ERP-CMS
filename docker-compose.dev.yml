@@ -1,0 +1,78 @@
+version: '3.8'
+
+# Development docker-compose with hot reload
+
+services:
+  # MongoDB Database
+  mongodb:
+    image: mongo:7.0
+    container_name: erp-cms-mongodb-dev
+    restart: unless-stopped
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: admin
+      MONGO_INITDB_ROOT_PASSWORD: admin123
+      MONGO_INITDB_DATABASE: erp_cms_dev
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodb_dev_data:/data/db
+    networks:
+      - erp-cms-dev-network
+
+  # Backend API (with hot reload)
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    container_name: erp-cms-backend-dev
+    restart: unless-stopped
+    ports:
+      - "5000:5000"
+    environment:
+      NODE_ENV: development
+      PORT: 5000
+      MONGODB_URI: mongodb://admin:admin123@mongodb:27017/erp_cms_dev?authSource=admin
+      JWT_SECRET: dev-secret-key-not-for-production
+      JWT_EXPIRE: 30d
+    volumes:
+      # Mount source code for hot reload
+      - .:/app
+      - /app/node_modules
+      # Mount uploads
+      - ./uploads:/app/uploads
+    depends_on:
+      - mongodb
+    networks:
+      - erp-cms-dev-network
+    command: npm run dev
+
+  # Frontend React (with hot reload)
+  frontend:
+    build:
+      context: ./client
+      dockerfile: Dockerfile.dev
+    container_name: erp-cms-frontend-dev
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    environment:
+      - CHOKIDAR_USEPOLLING=true
+      - WDS_SOCKET_PORT=3000
+    volumes:
+      # Mount source code for hot reload
+      - ./client:/app
+      - /app/node_modules
+    depends_on:
+      - backend
+    networks:
+      - erp-cms-dev-network
+    stdin_open: true
+    tty: true
+
+volumes:
+  mongodb_dev_data:
+    driver: local
+
+networks:
+  erp-cms-dev-network:
+    driver: bridge
