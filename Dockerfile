@@ -1,6 +1,6 @@
 # Multi-stage build for Node.js backend and React frontend
 
-# Stage 1: Build React frontend
+# Stage 1: Build React frontend (production only)
 FROM node:18-alpine AS client-builder
 
 WORKDIR /app/client
@@ -43,7 +43,8 @@ COPY --from=backend-builder /app/node_modules ./node_modules
 # Copy backend source code
 COPY . .
 
-# Copy built React app from client-builder
+# Copy built React app from client-builder (only in production)
+# Development mode will serve frontend from separate dev server
 COPY --from=client-builder /app/client/build ./client/build
 
 # Create uploads directory
