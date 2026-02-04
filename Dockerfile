@@ -9,7 +9,7 @@ WORKDIR /app/client
 COPY client/package*.json ./
 
 # Install client dependencies
-RUN npm ci --only=production
+RUN npm install --only=production
 
 # Copy client source
 COPY client/ ./
@@ -53,6 +53,7 @@ RUN mkdir -p uploads/images uploads/media uploads/resumes uploads/gallery
 RUN chmod -R 755 uploads
 
 # Expose port
+
 EXPOSE 5600
 
 # Health check
