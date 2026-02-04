@@ -4,6 +4,59 @@ const Settings = require('../models/Settings');
 const { protect, authorize } = require('../middleware/auth');
 const asyncHandler = require('../middleware/asyncHandler');
 
+// @route   POST /api/settings/test-smtp
+// @desc    Test SMTP connection
+// @access  Private/Admin
+router.post('/test-smtp', protect, authorize('admin'), asyncHandler(async (req, res) => {
+  const nodemailer = require('nodemailer');
+  const { smtpHost, smtpPort, smtpUser, smtpPassword, smtpFromEmail, smtpSecure } = req.body;
+
+  // Fetch from database if not provided in request
+  let host = smtpHost;
+  let port = smtpPort;
+  let user = smtpUser;
+  let password = smtpPassword;
+
+  if (!host || !port || !user || !password) {
+    const settings = await Settings.findOne();
+    host = host || settings?.smtpHost || process.env.SMTP_HOST;
+    port = port || settings?.smtpPort || process.env.SMTP_PORT;
+    user = user || settings?.smtpUser || process.env.SMTP_USER;
+    password = password || settings?.smtpPassword || process.env.SMTP_PASSWORD;
+  }
+
+  if (!host || !port || !user || !password) {
+    return res.status(400).json({ 
+      success: false, 
+      message: 'Missing SMTP configuration' 
+    });
+  }
+
+  try {
+    const transporter = nodemailer.createTransport({
+      host: host,
+      port: parseInt(port),
+      secure: smtpSecure || (port == 465),
+      auth: {
+        user: user,
+        pass: password
+      }
+    });
+
+    await transporter.verify();
+    
+    res.json({ 
+      success: true, 
+      message: 'SMTP connection successful' 
+    });
+  } catch (error) {
+    res.status(400).json({ 
+      success: false, 
+      message: error.message || 'SMTP connection failed' 
+    });
+  }
+}));
+
 // @route   GET /api/settings
 // @desc    Get settings (public - no auth required)
 // @access  Public
@@ -68,6 +121,8 @@ router.post('/', protect, authorize('admin'), asyncHandler(async (req, res) => {
     enableEmailJobApplication: req.body.enableEmailJobApplication !== undefined ? req.body.enableEmailJobApplication : true,
     enableEmailDynamicForms: req.body.enableEmailDynamicForms !== undefined ? req.body.enableEmailDynamicForms : true,
     showLoginButton: req.body.showLoginButton !== undefined ? req.body.showLoginButton : true,
+    showLoginToPublic: req.body.showLoginToPublic !== undefined ? req.body.showLoginToPublic : true,
+    showRegistrationToPublic: req.body.showRegistrationToPublic !== undefined ? req.body.showRegistrationToPublic : true,
     mapUrl: req.body.mapUrl || '',
     mapLatitude: req.body.mapLatitude || '',
     mapLongitude: req.body.mapLongitude || '',

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, useLocation, Navigate } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import axios from 'axios';
@@ -9,6 +9,7 @@ import Header from './components/Header';
 import Footer from './components/Footer';
 import ProtectedRoute from './components/ProtectedRoute';
 import ErrorBoundary from './components/ErrorBoundary';
+import { SettingsProvider, useSettings } from './context/SettingsContext';
 
 // Public Pages
 import Home from './pages/Home';
@@ -24,6 +25,7 @@ import ProductDetail from './pages/ProductDetail';
 import DynamicFormView from './pages/DynamicFormView';
 import Tutorials from './pages/Tutorials';
 import TutorialDetail from './pages/TutorialDetail';
+import Register from './pages/Register';
 
 // Admin Pages
 import Dashboard from './pages/admin/Dashboard';
@@ -58,6 +60,13 @@ import PagesList from './pages/admin/PagesList';
 import AdminTutorials from './pages/admin/AdminTutorials';
 import TutorialForm from './pages/admin/TutorialForm';
 import TutorialCategories from './pages/admin/TutorialCategoryTree';
+import Profile from './pages/Profile';
+import ForgotPassword from './pages/ForgotPassword';
+import ResetPassword from './pages/ResetPassword';
+import UsersList from './pages/admin/UsersList';
+import UserForm from './pages/admin/UserForm';
+import VerifyEmail from './pages/VerifyEmail';
+import ResendVerification from './pages/ResendVerification';
 
 import './App.css';
 
@@ -65,10 +74,22 @@ function AppContent() {
   const location = useLocation();
   const isAdminRoute = location.pathname.startsWith('/admin');
   const [brandingLoaded, setBrandingLoaded] = useState(false);
+  const { settings, loading: settingsLoading } = useSettings();
 
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [location]);
+
+  // Secret keyboard shortcut (Ctrl+Shift+L) to access admin login
+  useEffect(() => {
+    const handleKeyPress = (e) => {
+      if (e.ctrlKey && e.shiftKey && e.key === 'L') {
+        window.location.href = '/admin-login';
+      }
+    };
+    window.addEventListener('keydown', handleKeyPress);
+    return () => window.removeEventListener('keydown', handleKeyPress);
+  }, []);
 
   // Fetch and apply branding colors
   useEffect(() => {
@@ -140,7 +161,14 @@ function AppContent() {
           <Route path="/careers" element={<Careers />} />
           <Route path="/careers/:slug" element={<JobDetail />} />
           <Route path="/forms/:slug" element={<DynamicFormView />} />
-          <Route path="/login" element={<Login />} />
+          <Route path="/login" element={settings.showLoginToPublic ? <Login /> : <Navigate to="/" />} />
+          <Route path="/admin-login" element={<Login />} />
+          <Route path="/register" element={settings.showRegistrationToPublic ? <Register /> : <Navigate to="/" />} />
+           <Route path="/forgot-password" element={<ForgotPassword />} />
+           <Route path="/reset-password/:token" element={<ResetPassword />} />
+           <Route path="/verify-email/:token" element={<VerifyEmail />} />
+           <Route path="/resend-verification" element={<ResendVerification />} />
+           <Route path="/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
 
           {/* Admin Routes */}
           <Route path="/admin" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
@@ -210,7 +238,10 @@ function AppContent() {
           <Route path="/admin/forms/edit/:id" element={<ProtectedRoute><FormBuilder /></ProtectedRoute>} />
           <Route path="/admin/forms/:id/submissions" element={<ProtectedRoute><FormSubmissions /></ProtectedRoute>} />
           
-          {/* Settings */}
+          {/* Settings & Administration */}
+          <Route path="/admin/users" element={<ProtectedRoute><UsersList /></ProtectedRoute>} />
+          <Route path="/admin/users/new" element={<ProtectedRoute><UserForm /></ProtectedRoute>} />
+          <Route path="/admin/users/:id" element={<ProtectedRoute><UserForm /></ProtectedRoute>} />
           <Route path="/admin/menu" element={<ProtectedRoute><MenuManager /></ProtectedRoute>} />
           <Route path="/admin/settings" element={<ProtectedRoute><Settings /></ProtectedRoute>} />
         </Routes>
@@ -225,7 +256,9 @@ function App() {
   return (
     <ErrorBoundary>
       <Router>
-        <AppContent />
+        <SettingsProvider>
+          <AppContent />
+        </SettingsProvider>
       </Router>
     </ErrorBoundary>
   );

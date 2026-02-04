@@ -26,6 +26,42 @@ const UserSchema = new mongoose.Schema({
     enum: ['user', 'admin'],
     default: 'user'
   },
+  phone: {
+    type: String,
+    default: ''
+  },
+  address: {
+    type: String,
+    default: ''
+  },
+  photo: {
+    type: String,
+    default: ''
+  },
+  passwordResetToken: {
+    type: String,
+    default: undefined
+  },
+  passwordResetExpire: {
+    type: Date,
+    default: undefined
+  },
+  isEmailVerified: {
+    type: Boolean,
+    default: false
+  },
+  emailVerificationToken: {
+    type: String,
+    default: undefined
+  },
+  emailVerificationExpire: {
+    type: Date,
+    default: undefined
+  },
+  isEnabled: {
+    type: Boolean,
+    default: true
+  },
   createdAt: {
     type: Date,
     default: Date.now

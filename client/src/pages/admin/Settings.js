@@ -62,6 +62,8 @@ const AdminSettings = () => {
     instagram: '',
     youtube: '',
     showLoginButton: true,
+    showLoginToPublic: true,
+    showRegistrationToPublic: true,
     mapUrl: '',
     mapLatitude: '',
     mapLongitude: '',
@@ -172,6 +174,8 @@ const AdminSettings = () => {
           recaptchaSiteKey: data.recaptchaSiteKey || '',
           recaptchaSecretKey: data.recaptchaSecretKey || '',
           showLoginButton: data.showLoginButton !== undefined ? data.showLoginButton : true,
+          showLoginToPublic: data.showLoginToPublic !== undefined ? data.showLoginToPublic : true,
+          showRegistrationToPublic: data.showRegistrationToPublic !== undefined ? data.showRegistrationToPublic : true,
           mapUrl: data.mapUrl || '',
           mapLatitude: data.mapLatitude || '',
           mapLongitude: data.mapLongitude || '',
@@ -1268,6 +1272,32 @@ const AdminSettings = () => {
                 Show Login Button in Header
               </label>
               <small>When disabled, users can still access login at /login URL</small>
+            </div>
+            
+            <div className="form-group">
+              <label className="checkbox-label">
+                <input
+                  type="checkbox"
+                  name="showLoginToPublic"
+                  checked={formData.showLoginToPublic}
+                  onChange={handleChange}
+                />
+                Show Login Page to Public
+              </label>
+              <small>When disabled, login page will not be accessible to non-authenticated users</small>
+            </div>
+
+            <div className="form-group">
+              <label className="checkbox-label">
+                <input
+                  type="checkbox"
+                  name="showRegistrationToPublic"
+                  checked={formData.showRegistrationToPublic}
+                  onChange={handleChange}
+                />
+                Show Registration Page to Public
+              </label>
+              <small>When disabled, registration page will not be accessible to non-authenticated users</small>
             </div>
             
             <div className="form-group">

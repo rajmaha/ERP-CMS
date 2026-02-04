@@ -91,6 +91,14 @@ const SettingsSchema = new mongoose.Schema({
     type: Boolean,
     default: true
   },
+  showLoginToPublic: {
+    type: Boolean,
+    default: true
+  },
+  showRegistrationToPublic: {
+    type: Boolean,
+    default: true
+  },
   
   // Branding & Theme Settings
   branding: {

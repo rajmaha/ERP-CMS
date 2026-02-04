@@ -2,7 +2,7 @@ const { exec } = require('child_process');
 const path = require('path');
 const fs = require('fs');
 
-const MONGODB_URI = 'mongodb+srv://rajmaha:Chohbar570@cluster0.ggqbk.mongodb.net/?appName=Cluster0';
+const MONGODB_URI = '';
 const BACKUP_DIR = path.join(__dirname, 'database-backups');
 const timestamp = new Date().toISOString().replace(/[:.]/g, '-');
 const backupPath = path.join(BACKUP_DIR, `backup-${timestamp}`);

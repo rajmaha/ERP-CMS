@@ -51,6 +51,7 @@ const Profile = () => {
         headers: { Authorization: `Bearer ${token}` }
       });
       const userData = res.data.data;
+      setUser(userData);
       setProfileData({
         name: userData.name || '',
         email: userData.email || '',

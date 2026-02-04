@@ -130,9 +130,17 @@ const AdminLayout = ({ children }) => {
             <FaEnvelope /> Product Enquiries
           </Link>
 
-          <div className="nav-section-title">Settings</div>
+          <div className="nav-section-title">Administration</div>
+          <Link to="/admin/users" className={`nav-item ${isActive('/admin/users') ? 'active' : ''}`} onClick={closeSidebar}>
+            <FaUsers /> Users
+          </Link>
           <Link to="/admin/menu" className={`nav-item ${isActive('/admin/menu') ? 'active' : ''}`} onClick={closeSidebar}>
             <FaList /> Menu Manager
+          </Link>
+
+          <div className="nav-section-title">Settings</div>
+          <Link to="/profile" className={`nav-item ${isActive('/profile') ? 'active' : ''}`} onClick={closeSidebar}>
+            <FaUser /> My Profile
           </Link>
           <Link to="/admin/settings" className={`nav-item ${isActive('/admin/settings') ? 'active' : ''}`} onClick={closeSidebar}>
             <FaCog /> Settings
@@ -140,7 +148,7 @@ const AdminLayout = ({ children }) => {
         </nav>
 
         <div className="sidebar-footer">
-          <div className="user-info">
+          <Link to="/profile" className="user-info" onClick={closeSidebar}>
             <div className="user-avatar">
               <FaUser />
             </div>
@@ -148,7 +156,7 @@ const AdminLayout = ({ children }) => {
               <h4>{user?.name || 'Admin User'}</h4>
               <p>{user?.email || 'admin@example.com'}</p>
             </div>
-          </div>
+          </Link>
           <button onClick={handleLogout} className="logout-btn">
             <FaSignOutAlt /> Logout
           </button>

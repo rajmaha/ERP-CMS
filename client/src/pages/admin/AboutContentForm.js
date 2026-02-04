@@ -16,6 +16,13 @@ const AboutContentForm = () => {
     content: '',
     mission: '',
     vision: '',
+    sectionTitles: {
+      whoWeAre: 'Who We Are',
+      coreValues: 'Our Core Values',
+      whyChooseUs: 'Why Choose Us',
+      mission: 'Our Mission',
+      vision: 'Our Vision'
+    },
     values: [],
     whyChooseUs: [],
     teamMembers: []
@@ -54,7 +61,18 @@ const AboutContentForm = () => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
+    if (name.startsWith('sectionTitles.')) {
+      const titleKey = name.split('.')[1];
+      setFormData({
+        ...formData,
+        sectionTitles: {
+          ...formData.sectionTitles,
+          [titleKey]: value
+        }
+      });
+    } else {
+      setFormData({ ...formData, [name]: value });
+    }
   };
 
   const addValue = () => {
@@ -253,6 +271,65 @@ const AboutContentForm = () => {
           </fieldset>
 
           <fieldset className="form-section">
+            <legend>Section Titles</legend>
+
+            <div className="form-group">
+              <label>"Who We Are" Section Title</label>
+              <input
+                type="text"
+                name="sectionTitles.whoWeAre"
+                value={formData.sectionTitles?.whoWeAre || 'Who We Are'}
+                onChange={handleChange}
+                className="form-control"
+              />
+            </div>
+
+            <div className="form-group">
+              <label>"Core Values" Section Title</label>
+              <input
+                type="text"
+                name="sectionTitles.coreValues"
+                value={formData.sectionTitles?.coreValues || 'Our Core Values'}
+                onChange={handleChange}
+                className="form-control"
+              />
+            </div>
+
+            <div className="form-group">
+              <label>"Why Choose Us" Section Title</label>
+              <input
+                type="text"
+                name="sectionTitles.whyChooseUs"
+                value={formData.sectionTitles?.whyChooseUs || 'Why Choose Us'}
+                onChange={handleChange}
+                className="form-control"
+              />
+            </div>
+
+            <div className="form-group">
+              <label>"Mission" Section Title</label>
+              <input
+                type="text"
+                name="sectionTitles.mission"
+                value={formData.sectionTitles?.mission || 'Our Mission'}
+                onChange={handleChange}
+                className="form-control"
+              />
+            </div>
+
+            <div className="form-group">
+              <label>"Vision" Section Title</label>
+              <input
+                type="text"
+                name="sectionTitles.vision"
+                value={formData.sectionTitles?.vision || 'Our Vision'}
+                onChange={handleChange}
+                className="form-control"
+              />
+            </div>
+          </fieldset>
+
+          <fieldset className="form-section">
             <legend>Company Values</legend>
 
             {formData.values.length > 0 && (
@@ -387,7 +464,7 @@ const AboutContentForm = () => {
           </fieldset>
 
           <fieldset className="form-section">
-            <legend>Why Choose Us Section</legend>
+            <legend>Company Values</legend>
 
             {formData.whyChooseUs.length > 0 && (
               <div className="why-items-list">

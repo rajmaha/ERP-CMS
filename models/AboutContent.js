@@ -10,6 +10,28 @@ const AboutContentSchema = new mongoose.Schema({
   vision: String,
   missionImage: String,
   visionImage: String,
+  sectionTitles: {
+    whoWeAre: {
+      type: String,
+      default: 'Who We Are'
+    },
+    coreValues: {
+      type: String,
+      default: 'Our Core Values'
+    },
+    whyChooseUs: {
+      type: String,
+      default: 'Why Choose Us'
+    },
+    mission: {
+      type: String,
+      default: 'Our Mission'
+    },
+    vision: {
+      type: String,
+      default: 'Our Vision'
+    }
+  },
   values: [String],
   whyChooseUs: [{
     icon: String,
