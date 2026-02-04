@@ -26,7 +26,8 @@ WORKDIR /app
 COPY package*.json ./
 
 # Install backend dependencies
-RUN npm ci --only=production
+#RUN npm ci --only=production
+RUN npm install --only=production
 
 # Stage 3: Production image
 FROM node:18-alpine
@@ -52,11 +53,11 @@ RUN mkdir -p uploads/images uploads/media uploads/resumes uploads/gallery
 RUN chmod -R 755 uploads
 
 # Expose port
-EXPOSE 5000
+EXPOSE 5600
 
 # Health check
 HEALTHCHECK --interval=30s --timeout=10s --start-period=40s --retries=3 \
-  CMD curl -f http://localhost:5000/health || exit 1
+  CMD curl -f http://localhost:5600/health || exit 1
 
 # Start the application
 CMD ["node", "server.js"]
