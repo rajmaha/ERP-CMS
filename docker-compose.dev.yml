@@ -13,7 +13,7 @@ services:
       MONGO_INITDB_ROOT_PASSWORD: admin123
       MONGO_INITDB_DATABASE: erp_cms_dev
     ports:
-      - "27018:27018"
+      - "27018:27017"
     volumes:
       - mongodb_dev_data:/data/db
     networks:
