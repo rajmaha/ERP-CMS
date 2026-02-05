@@ -25,6 +25,15 @@
   text-decoration: none;
   white-space: nowrap;
   flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.logo-container {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
 }
 
 .logo h1 {
@@ -35,6 +44,23 @@
   overflow: hidden;
   text-overflow: ellipsis;
   max-width: 250px;
+}
+
+.logo-image {
+  max-height: 50px;
+  max-width: 150px;
+  object-fit: contain;
+  flex-shrink: 0;
+}
+
+.site-name {
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: var(--primary-color);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 200px;
 }
 
 .mobile-toggle {
@@ -312,9 +338,23 @@
     display: block;
   }
 
+  .logo-container {
+    gap: 0.5rem;
+  }
+
   .logo h1 {
-    font-size: 1.25rem;
-    max-width: 200px;
+    font-size: 1.1rem;
+    max-width: 150px;
+  }
+
+  .logo-image {
+    max-height: 35px;
+    max-width: 120px;
+  }
+
+  .site-name {
+    font-size: 1.1rem;
+    max-width: 150px;
   }
 
   .nav-menu {

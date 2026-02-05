@@ -180,7 +180,12 @@ const Header = () => {
       <div className="container">
         <nav className="navbar">
           <Link to="/" className="logo">
-            <h1>{settings?.siteName || 'ERP CMS'}</h1>
+            <div className="logo-container">
+              {settings?.logo && (
+                <img src={settings.logo} alt={settings?.siteName || 'ERP CMS'} className="logo-image" />
+              )}
+              <span className="site-name">{settings?.siteName || 'ERP CMS'}</span>
+            </div>
           </Link>
 
           <button className="mobile-toggle" onClick={toggleMobileMenu}>
