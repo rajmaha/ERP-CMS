@@ -6,6 +6,7 @@ const SettingsSchema = new mongoose.Schema({
     type: String,
     default: 'ERP CMS'
   },
+  siteDescription: String,
   logo: String,
   favicon: String,
   

@@ -341,9 +341,17 @@ const AdminSettings = () => {
           ogImage: imageUrl
         }
       });
+      setFormData({
+        ...formData,
+        ogImage: imageUrl
+      });
     } else {
       setSettings({
         ...settings,
+        [currentImageField]: imageUrl
+      });
+      setFormData({
+        ...formData,
         [currentImageField]: imageUrl
       });
     }
@@ -443,6 +451,9 @@ const AdminSettings = () => {
       // Flatten the nested objects to match backend expectations
       const dataToSubmit = {
         ...formData,
+        // Logo and favicon from formData
+        logo: formData.logo || '',
+        favicon: formData.favicon || '',
         // Flatten socialMedia
         facebook: settings.socialMedia?.facebook || formData.facebook || '',
         twitter: settings.socialMedia?.twitter || formData.twitter || '',
