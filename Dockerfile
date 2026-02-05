@@ -49,6 +49,7 @@ COPY --chown=node:node models/ ./models/
 COPY --chown=node:node routes/ ./routes/
 COPY --chown=node:node utils/ ./utils/
 COPY --chown=node:node scripts/ ./scripts/
+COPY --chown=node:node manage/ ./manage/
 
 # Copy built React app from client-builder (only in production)
 # Development mode will serve frontend from separate dev server
