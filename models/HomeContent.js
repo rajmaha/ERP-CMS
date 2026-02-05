@@ -7,6 +7,7 @@ const HomeContentSchema = new mongoose.Schema({
   },
   heroSubtitle: String,
   heroImage: String,
+  heroDescription: String,
   
   // Why Choose Us Section
   whyChooseUs: [{

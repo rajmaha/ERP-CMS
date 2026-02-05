@@ -96,7 +96,19 @@ function AppContent() {
     const fetchAndApplyBranding = async () => {
       try {
         const res = await axios.get('/api/settings');
-        const branding = res.data.data?.branding;
+        const data = res.data.data;
+        const branding = data?.branding;
+        
+        // Update favicon if available
+        if (data?.favicon) {
+          let faviconLink = document.querySelector("link[rel='icon']");
+          if (!faviconLink) {
+            faviconLink = document.createElement('link');
+            faviconLink.rel = 'icon';
+            document.head.appendChild(faviconLink);
+          }
+          faviconLink.href = data.favicon;
+        }
         
         if (branding && Object.keys(branding).length > 0) {
           // Apply branding colors as CSS variables to the root element

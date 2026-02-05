@@ -21,7 +21,8 @@ const AboutContentForm = () => {
       coreValues: 'Our Core Values',
       whyChooseUs: 'Why Choose Us',
       mission: 'Our Mission',
-      vision: 'Our Vision'
+      vision: 'Our Vision',
+      companyValues: 'Company Values'
     },
     values: [],
     whyChooseUs: [],
@@ -327,6 +328,17 @@ const AboutContentForm = () => {
                 className="form-control"
               />
             </div>
+
+            <div className="form-group">
+              <label>"Company Values" Section Title</label>
+              <input
+                type="text"
+                name="sectionTitles.companyValues"
+                value={formData.sectionTitles?.companyValues || 'Company Values'}
+                onChange={handleChange}
+                className="form-control"
+              />
+            </div>
           </fieldset>
 
           <fieldset className="form-section">
@@ -464,7 +476,7 @@ const AboutContentForm = () => {
           </fieldset>
 
           <fieldset className="form-section">
-            <legend>Company Values</legend>
+            <legend>Why Choose Us</legend>
 
             {formData.whyChooseUs.length > 0 && (
               <div className="why-items-list">

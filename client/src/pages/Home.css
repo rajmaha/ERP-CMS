@@ -221,6 +221,45 @@
   opacity: 0.9;
 }
 
+.custom-section {
+  padding: 4rem 0;
+  background: white;
+  border-top: 1px solid #f0f0f0;
+}
+
+.custom-section h2 {
+  font-size: 2.5rem;
+  margin-bottom: 2rem;
+  color: var(--text-color);
+  text-align: center;
+}
+
+.custom-section-content {
+  max-width: 800px;
+  margin: 0 auto;
+  color: var(--text-light);
+  line-height: 1.8;
+}
+
+.custom-section-content p {
+  margin-bottom: 1rem;
+}
+
+.custom-section-content h3 {
+  font-size: 1.5rem;
+  margin: 2rem 0 1rem;
+  color: var(--text-color);
+}
+
+.custom-section-content ul,
+.custom-section-content ol {
+  margin: 1rem 0 1rem 2rem;
+}
+
+.custom-section-content li {
+  margin-bottom: 0.5rem;
+}
+
 .cta-section {
   padding: 5rem 0;
   text-align: center;

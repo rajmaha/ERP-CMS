@@ -188,6 +188,18 @@ const Home = () => {
           </div>
         </section>
 
+        {/* Additional Custom Sections */}
+        {homeContent?.sections && homeContent.sections.length > 0 && (
+          homeContent.sections.sort((a, b) => a.order - b.order).map((section, index) => (
+            <section key={index} className="custom-section">
+              <div className="container">
+                <h2>{section.title}</h2>
+                <div className="custom-section-content" dangerouslySetInnerHTML={{ __html: section.content }}></div>
+              </div>
+            </section>
+          ))
+        )}
+
         {/* CTA Section */}
         <section className="cta-section">
           <div className="container">

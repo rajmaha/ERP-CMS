@@ -15,6 +15,7 @@ const HomeContentForm = () => {
     heroTitle: '',
     heroSubtitle: '',
     heroImage: '',
+    heroDescription: '',
     whyChooseUs: [],
     commitments: [],
     statistics: [],
@@ -49,7 +50,8 @@ const HomeContentForm = () => {
           whyChooseUs: res.data.data.whyChooseUs || [],
           commitments: res.data.data.commitments || [],
           statistics: res.data.data.statistics || [],
-          sections: res.data.data.sections || []
+          sections: res.data.data.sections || [],
+          heroDescription: res.data.data.heroDescription || ''
         });
       }
       setLoading(false);
@@ -122,12 +124,14 @@ const HomeContentForm = () => {
 
   // Why Choose Us functions
   const addWhyChooseUs = () => {
-    if (newWhyItem.title && newWhyItem.description) {
+    if (newWhyItem.icon && newWhyItem.title && newWhyItem.description) {
       setFormData({
         ...formData,
         whyChooseUs: [...formData.whyChooseUs, { ...newWhyItem, order: formData.whyChooseUs.length }]
       });
       setNewWhyItem({ icon: '🚀', title: '', description: '' });
+    } else {
+      toast.error('Please fill in all fields for "Why Choose Us"');
     }
   };
 
@@ -156,12 +160,14 @@ const HomeContentForm = () => {
 
   // Commitments functions
   const addCommitment = () => {
-    if (newCommitment.title && newCommitment.description) {
+    if (newCommitment.number && newCommitment.title && newCommitment.description) {
       setFormData({
         ...formData,
         commitments: [...formData.commitments, { ...newCommitment, order: formData.commitments.length }]
       });
       setNewCommitment({ number: `0${formData.commitments.length + 2}`, title: '', description: '' });
+    } else {
+      toast.error('Please fill in all commitment fields');
     }
   };
 
@@ -415,12 +421,8 @@ const HomeContentForm = () => {
                 </div>
               </div>
               <div className="form-group">
-                <label>Commitment Description</label>
-                <RichTextEditor
-                  value={formData.commitmentDescription}
-                  onChange={(content) => setFormData({ ...formData, commitmentDescription: content })}
-                  placeholder="Enter commitment section description..."
-                />
+                <label>Description</label>
+                <textarea value={newCommitment.description} onChange={(e) => setNewCommitment({ ...newCommitment, description: e.target.value })} placeholder="Describe our commitment..." rows="2" className="form-control"></textarea>
               </div>
               <button type="button" onClick={addCommitment} className="btn btn-secondary">
                 <FaPlus /> Add Commitment
