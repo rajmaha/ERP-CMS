@@ -40,8 +40,17 @@ RUN apk add --no-cache curl
 # Copy backend dependencies from builder
 COPY --from=backend-builder /app/node_modules ./node_modules
 
-# Copy backend source code
-COPY . .
+# Copy backend source code (excluding node_modules and client which is built)
+COPY --chown=node:node \
+  server.js \
+  package*.json \
+  .env* \
+  middleware/ \
+  models/ \
+  routes/ \
+  utils/ \
+  scripts/ \
+  ./
 
 # Copy built React app from client-builder (only in production)
 # Development mode will serve frontend from separate dev server
