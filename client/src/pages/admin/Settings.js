@@ -78,8 +78,9 @@ const AdminSettings = () => {
     enableEmailJobApplication: true,
     enableEmailDynamicForms: true,
     enableSocialSharing: false,
+    maintenanceMode: false,
     facebookPageId: '',
-    facebookPageAccessToken: '',
+    facebookPageAccessToken: ''
     twitterApiKey: '',
     twitterApiSecret: '',
     twitterAccessToken: '',
@@ -188,6 +189,7 @@ const AdminSettings = () => {
           enableEmailJobApplication: data.enableEmailJobApplication !== undefined ? data.enableEmailJobApplication : true,
           enableEmailDynamicForms: data.enableEmailDynamicForms !== undefined ? data.enableEmailDynamicForms : true,
           enableSocialSharing: data.enableSocialSharing || false,
+          maintenanceMode: data.maintenanceMode !== undefined ? data.maintenanceMode : false,
           facebookPageId: data.facebookPageId || '',
           facebookPageAccessToken: data.facebookPageAccessToken || '',
           twitterApiKey: data.twitterApiKey || '',
@@ -691,6 +693,39 @@ const AdminSettings = () => {
                 </div>
                 <small>Recommended: 32x32px (ICO or PNG)</small>
               </div>
+            </div>
+
+            <div className="form-section" style={{ marginTop: '2rem', padding: '1.5rem', backgroundColor: '#f9fafb', borderRadius: '8px', border: '1px solid #e5e7eb' }}>
+              <h3 style={{ marginTop: 0, marginBottom: '1rem' }}>Maintenance Mode</h3>
+              <div className="form-group">
+                <label className="checkbox-label">
+                  <input
+                    type="checkbox"
+                    name="maintenanceMode"
+                    checked={formData.maintenanceMode || false}
+                    onChange={handleChange}
+                  />
+                  <strong>Enable Maintenance Mode</strong>
+                </label>
+                <small style={{ display: 'block', marginTop: '0.5rem', color: 'var(--text-light)' }}>
+                  When enabled, only administrators can access the site. Regular users and guests can only access the Contact page and Login page.
+                </small>
+              </div>
+              {formData.maintenanceMode && (
+                <div style={{ 
+                  marginTop: '1rem', 
+                  padding: '1rem', 
+                  backgroundColor: '#fef3c7', 
+                  borderLeft: '4px solid #f59e0b', 
+                  borderRadius: '4px',
+                  color: '#92400e'
+                }}>
+                  <strong>⚠️ Maintenance Mode is Active</strong>
+                  <p style={{ margin: '0.5rem 0 0 0', fontSize: '0.9rem' }}>
+                    All pages except Contact and Login are restricted to administrators only.
+                  </p>
+                </div>
+              )}
             </div>
           </section>
           )}

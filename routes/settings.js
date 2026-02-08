@@ -137,6 +137,7 @@ router.post('/', protect, authorize('admin'), asyncHandler(async (req, res) => {
     linkedinAccessToken: req.body.linkedinAccessToken || '',
     linkedinPersonUrn: req.body.linkedinPersonUrn || '',
     branding: req.body.branding || {},
+    maintenanceMode: req.body.maintenanceMode !== undefined ? req.body.maintenanceMode : false,
     updatedAt: Date.now()
   };
 

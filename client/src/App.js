@@ -53,6 +53,7 @@ import ApplicationsList from './pages/admin/ApplicationsList';
 import ContactMessages from './pages/admin/ContactMessages';
 import DepartmentManager from './pages/admin/DepartmentManager';
 import ProductEnquiries from './pages/admin/ProductEnquiries';
+import DemoRequests from './pages/admin/DemoRequests';
 import FormsList from './pages/admin/FormsList';
 import FormBuilder from './pages/admin/FormBuilder';
 import FormSubmissions from './pages/admin/FormSubmissions';
@@ -211,6 +212,7 @@ function AppContent() {
           <Route path="/admin/products/new" element={<ProtectedRoute><ProductForm /></ProtectedRoute>} />
           <Route path="/admin/products/edit/:id" element={<ProtectedRoute><ProductForm /></ProtectedRoute>} />
           <Route path="/admin/product-enquiries" element={<ProtectedRoute><ProductEnquiries /></ProtectedRoute>} />
+          <Route path="/admin/demos" element={<ProtectedRoute><DemoRequests /></ProtectedRoute>} />
           
           {/* Portfolio Management */}
           <Route path="/admin/portfolio" element={<ProtectedRoute><PortfolioList /></ProtectedRoute>} />

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import axios from 'axios';
 import { toast } from 'react-toastify';
-import { FaHome, FaImage, FaImages, FaFileAlt, FaBox, FaBriefcase, FaStar, FaUsers, FaEnvelope, FaList, FaCog, FaBlog, FaUserTie, FaWpforms, FaSignOutAlt, FaUser, FaBars, FaTimes, FaGraduationCap } from 'react-icons/fa';
+import { FaHome, FaImage, FaImages, FaFileAlt, FaBox, FaBriefcase, FaStar, FaUsers, FaEnvelope, FaList, FaCog, FaBlog, FaUserTie, FaWpforms, FaSignOutAlt, FaUser, FaBars, FaTimes, FaGraduationCap, FaVideo } from 'react-icons/fa';
 import './AdminLayout.css';
 
 const AdminLayout = ({ children }) => {
@@ -128,6 +128,9 @@ const AdminLayout = ({ children }) => {
           </Link>
           <Link to="/admin/product-enquiries" className={`nav-item ${isActive('/admin/product-enquiries') ? 'active' : ''}`} onClick={closeSidebar}>
             <FaEnvelope /> Product Enquiries
+          </Link>
+          <Link to="/admin/demos" className={`nav-item ${isActive('/admin/demos') ? 'active' : ''}`} onClick={closeSidebar}>
+            <FaVideo /> Demo Requests
           </Link>
 
           <div className="nav-section-title">Administration</div>

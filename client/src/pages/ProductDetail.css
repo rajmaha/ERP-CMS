@@ -145,6 +145,20 @@
   align-items: center;
   gap: 0.75rem;
   justify-content: center;
+  flex: 1;
+  width: 100%;
+}
+
+.product-info-section > .btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+}
+
+.product-info-section > .btn-primary,
+.product-info-section > .btn-secondary {
+  width: 100%;
 }
 
 .featured-badge {
@@ -340,6 +354,16 @@
 
 .form-group {
   margin-bottom: 1.5rem;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+}
+
+.form-row .form-group {
+  margin-bottom: 0;
 }
 
 .form-group label {

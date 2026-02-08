@@ -12,6 +12,8 @@ const rateLimit = require('express-rate-limit');
 const errorMiddleware = require('./middleware/errorMiddleware');
 const requestLogger = require('./middleware/requestLogger');
 const ErrorHandler = require('./middleware/errorHandler');
+const maintenanceMode = require('./middleware/maintenanceMode');
+const { protect } = require('./middleware/auth');
 
 const app = express();
 
@@ -86,6 +88,9 @@ mongoose.connect(process.env.MONGODB_URI, {
   process.exit(1);
 });
 
+// Apply maintenance mode middleware (before auth, so it applies to all routes)
+app.use(maintenanceMode);
+
 // Mount routes
 app.use('/api/auth', require('./routes/auth'));
 app.use('/api/pages', require('./routes/pages'));
@@ -102,6 +107,7 @@ app.use('/api/blog', require('./routes/blog'));
 app.use('/api/tutorials', require('./routes/tutorials'));
 app.use('/api/jobs', require('./routes/jobs'));
 app.use('/api/product-enquiries', require('./routes/productEnquiry'));
+app.use('/api/demos', require('./routes/demo'));
 app.use('/api/forms', require('./routes/dynamicForms'));
 
 // Serve static assets in production

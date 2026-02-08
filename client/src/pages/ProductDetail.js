@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import axios from 'axios';
 import SEO from '../components/SEO';
-import { FaArrowLeft, FaEnvelope, FaTag, FaCheckCircle } from 'react-icons/fa';
+import { FaArrowLeft, FaEnvelope, FaTag, FaCheckCircle, FaVideo, FaCalendar, FaClock } from 'react-icons/fa';
 import { toast } from 'react-toastify';
 import './ProductDetail.css';
 import ShareButtons from '../components/ShareButtons';
@@ -14,11 +14,21 @@ const ProductDetail = () => {
   const [loading, setLoading] = useState(true);
   const [selectedImage, setSelectedImage] = useState('');
   const [showEnquiryForm, setShowEnquiryForm] = useState(false);
+  const [showDemoForm, setShowDemoForm] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [enquiryData, setEnquiryData] = useState({
     name: '',
     email: '',
     phone: '',
+    message: ''
+  });
+  const [demoData, setDemoData] = useState({
+    name: '',
+    email: '',
+    phone: '',
+    company: '',
+    preferredTime: 'flexible',
+    preferredDate: '',
     message: ''
   });
   const [recaptchaToken, setRecaptchaToken] = useState('');
@@ -65,6 +75,11 @@ const ProductDetail = () => {
     setEnquiryData({ ...enquiryData, [name]: value });
   };
 
+  const handleDemoChange = (e) => {
+    const { name, value } = e.target;
+    setDemoData({ ...demoData, [name]: value });
+  };
+
   const handleEnquirySubmit = async (e) => {
     e.preventDefault();
     setSubmitting(true);
@@ -91,6 +106,34 @@ const ProductDetail = () => {
       setEnquiryData({ name: '', email: '', phone: '', message: '' });
     } catch (err) {
       toast.error(err.response?.data?.message || 'Error sending enquiry. Please try again.');
+    } finally {
+      setSubmitting(false);
+    }
+  };
+
+  const handleDemoSubmit = async (e) => {
+    e.preventDefault();
+    setSubmitting(true);
+
+    try {
+      await axios.post('/api/demos', {
+        product: product._id,
+        productName: product.name,
+        ...demoData
+      });
+      toast.success('Demo request sent successfully! We will contact you soon.');
+      setShowDemoForm(false);
+      setDemoData({ 
+        name: '', 
+        email: '', 
+        phone: '',
+        company: '',
+        preferredTime: 'flexible',
+        preferredDate: '',
+        message: '' 
+      });
+    } catch (err) {
+      toast.error(err.response?.data?.message || 'Error sending demo request. Please try again.');
     } finally {
       setSubmitting(false);
     }
@@ -171,6 +214,10 @@ const ProductDetail = () => {
 
               <button onClick={() => setShowEnquiryForm(true)} className="btn btn-primary btn-large">
                 <FaEnvelope /> Send Enquiry
+              </button>
+
+              <button onClick={() => setShowDemoForm(true)} className="btn btn-secondary btn-large">
+                <FaVideo /> Request Demo
               </button>
 
               {product.isFeatured && (
@@ -304,6 +351,119 @@ const ProductDetail = () => {
                     {submitting ? 'Sending...' : 'Send Enquiry'}
                   </button>
                   <button type="button" onClick={() => setShowEnquiryForm(false)} className="btn btn-secondary">
+                    Cancel
+                  </button>
+                </div>
+              </form>
+            </div>
+          </>
+        )}
+
+        {/* Demo Request Modal */}
+        {showDemoForm && (
+          <>
+            <div className="modal-overlay" onClick={() => setShowDemoForm(false)}></div>
+            <div className="enquiry-modal">
+              <div className="modal-header">
+                <h2>Request Demo: {product.name}</h2>
+                <button onClick={() => setShowDemoForm(false)} className="close-btn">✕</button>
+              </div>
+
+              <form onSubmit={handleDemoSubmit} className="enquiry-form">
+                <div className="form-group">
+                  <label>Your Name *</label>
+                  <input 
+                    type="text" 
+                    name="name" 
+                    value={demoData.name} 
+                    onChange={handleDemoChange} 
+                    required 
+                    className="form-control" 
+                  />
+                </div>
+
+                <div className="form-row">
+                  <div className="form-group">
+                    <label>Email *</label>
+                    <input 
+                      type="email" 
+                      name="email" 
+                      value={demoData.email} 
+                      onChange={handleDemoChange} 
+                      required 
+                      className="form-control" 
+                    />
+                  </div>
+
+                  <div className="form-group">
+                    <label>Phone *</label>
+                    <input 
+                      type="tel" 
+                      name="phone" 
+                      value={demoData.phone} 
+                      onChange={handleDemoChange} 
+                      required 
+                      className="form-control" 
+                    />
+                  </div>
+                </div>
+
+                <div className="form-group">
+                  <label>Company</label>
+                  <input 
+                    type="text" 
+                    name="company" 
+                    value={demoData.company} 
+                    onChange={handleDemoChange} 
+                    className="form-control" 
+                  />
+                </div>
+
+                <div className="form-row">
+                  <div className="form-group">
+                    <label>Preferred Time</label>
+                    <select 
+                      name="preferredTime" 
+                      value={demoData.preferredTime} 
+                      onChange={handleDemoChange} 
+                      className="form-control"
+                    >
+                      <option value="flexible">Flexible</option>
+                      <option value="morning">Morning (9 AM - 12 PM)</option>
+                      <option value="afternoon">Afternoon (12 PM - 5 PM)</option>
+                      <option value="evening">Evening (5 PM - 8 PM)</option>
+                    </select>
+                  </div>
+
+                  <div className="form-group">
+                    <label>Preferred Date</label>
+                    <input 
+                      type="date" 
+                      name="preferredDate" 
+                      value={demoData.preferredDate} 
+                      onChange={handleDemoChange} 
+                      className="form-control" 
+                    />
+                  </div>
+                </div>
+
+                <div className="form-group">
+                  <label>Additional Details</label>
+                  <textarea 
+                    name="message" 
+                    value={demoData.message} 
+                    onChange={handleDemoChange} 
+                    rows="4" 
+                    className="form-control"
+                    placeholder="Tell us about your requirements or specific features you'd like to see..."
+                  ></textarea>
+                </div>
+
+                <div className="form-actions">
+                  <button type="submit" className="btn btn-primary" disabled={submitting}>
+                    {submitting ? 'Sending...' : 'Request Demo'}
+                  </button>
+                  <button type="button" onClick={() => setShowDemoForm(false)} className="btn btn-secondary">
                     Cancel
                   </button>
                 </div>

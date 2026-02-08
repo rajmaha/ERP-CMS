@@ -205,6 +205,12 @@ const SettingsSchema = new mongoose.Schema({
     default: false
   },
   
+  // Maintenance Mode
+  maintenanceMode: {
+    type: Boolean,
+    default: false
+  },
+  
   // Facebook Settings
   facebookPageId: String,
   facebookPageAccessToken: String,
