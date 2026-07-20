@@ -46,7 +46,7 @@ const About = () => {
         <section className="about-content">
           <div className="container">
             <div className="content-wrapper">
-              <h2>Who We Are</h2>
+              <h2>{aboutContent?.sectionTitles?.whoWeAre || 'Who We Are'}</h2>
               {aboutContent?.content ? (
                 <div dangerouslySetInnerHTML={{ __html: aboutContent.content }}></div>
               ) : (
@@ -61,7 +61,7 @@ const About = () => {
             <div className="mission-vision-grid">
               <div className="mission-card">
                 <div className="card-icon">🎯</div>
-                <h2>Our Mission</h2>
+                <h2>{aboutContent?.sectionTitles?.mission || 'Our Mission'}</h2>
                 {aboutContent?.mission ? (
                   <div dangerouslySetInnerHTML={{ __html: aboutContent.mission }}></div>
                 ) : (
@@ -70,7 +70,7 @@ const About = () => {
               </div>
               <div className="vision-card">
                 <div className="card-icon">🚀</div>
-                <h2>Our Vision</h2>
+                <h2>{aboutContent?.sectionTitles?.vision || 'Our Vision'}</h2>
                 {aboutContent?.vision ? (
                   <div dangerouslySetInnerHTML={{ __html: aboutContent.vision }}></div>
                 ) : (
@@ -83,7 +83,7 @@ const About = () => {
 
         <section className="values-section">
           <div className="container">
-            <h2>Our Core Values</h2>
+            <h2>{aboutContent?.sectionTitles?.coreValues || 'Our Core Values'}</h2>
             <div className="values-grid">
               {aboutContent?.values && aboutContent.values.length > 0 ? (
                 aboutContent.values.map((value, index) => (
@@ -132,7 +132,7 @@ const About = () => {
 
         <section className="why-choose-section">
           <div className="container">
-            <h2>Why Choose Us</h2>
+            <h2>{aboutContent?.sectionTitles?.whyChooseUs || 'Why Choose Us'}</h2>
             <div className="choose-grid">
               {aboutContent?.whyChooseUs && aboutContent.whyChooseUs.length > 0 ? (
                 aboutContent.whyChooseUs.sort((a, b) => a.order - b.order).map((item, index) => (

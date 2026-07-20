@@ -16,6 +16,10 @@ const HomeContentForm = () => {
     heroSubtitle: '',
     heroImage: '',
     heroDescription: '',
+    sectionTitles: {
+      whyChooseUs: 'Why Choose Us',
+      commitments: 'Our Commitments'
+    },
     whyChooseUs: [],
     commitments: [],
     statistics: [],
@@ -47,6 +51,11 @@ const HomeContentForm = () => {
       if (res.data.data) {
         setFormData({
           ...res.data.data,
+          sectionTitles: {
+            whyChooseUs: 'Why Choose Us',
+            commitments: 'Our Commitments',
+            ...res.data.data.sectionTitles
+          },
           whyChooseUs: res.data.data.whyChooseUs || [],
           commitments: res.data.data.commitments || [],
           statistics: res.data.data.statistics || [],
@@ -119,7 +128,18 @@ const HomeContentForm = () => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
+    if (name.startsWith('sectionTitles.')) {
+      const titleKey = name.split('.')[1];
+      setFormData({
+        ...formData,
+        sectionTitles: {
+          ...formData.sectionTitles,
+          [titleKey]: value
+        }
+      });
+    } else {
+      setFormData({ ...formData, [name]: value });
+    }
   };
 
   // Why Choose Us functions
@@ -329,6 +349,17 @@ const HomeContentForm = () => {
           <fieldset className="form-section">
             <legend>Why Choose Us Section</legend>
 
+            <div className="form-group">
+              <label>Section Title</label>
+              <input
+                type="text"
+                name="sectionTitles.whyChooseUs"
+                value={formData.sectionTitles?.whyChooseUs || 'Why Choose Us'}
+                onChange={handleChange}
+                className="form-control"
+              />
+            </div>
+
             {formData.whyChooseUs.length > 0 && (
               <div className="items-list">
                 {formData.whyChooseUs.map((item, index) => (
@@ -378,6 +409,17 @@ const HomeContentForm = () => {
           {/* Our Commitments Section */}
           <fieldset className="form-section">
             <legend>Our Commitments Section</legend>
+
+            <div className="form-group">
+              <label>Section Title</label>
+              <input
+                type="text"
+                name="sectionTitles.commitments"
+                value={formData.sectionTitles?.commitments || 'Our Commitments'}
+                onChange={handleChange}
+                className="form-control"
+              />
+            </div>
 
             {formData.commitments.length > 0 && (
               <div className="items-list">

@@ -8,7 +8,18 @@ const HomeContentSchema = new mongoose.Schema({
   heroSubtitle: String,
   heroImage: String,
   heroDescription: String,
-  
+
+  sectionTitles: {
+    whyChooseUs: {
+      type: String,
+      default: 'Why Choose Us'
+    },
+    commitments: {
+      type: String,
+      default: 'Our Commitments'
+    }
+  },
+
   // Why Choose Us Section
   whyChooseUs: [{
     icon: String,

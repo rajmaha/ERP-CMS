@@ -62,7 +62,7 @@ const Home = () => {
         {/* Why Choose Us Section */}
         <section className="features-section">
           <div className="container">
-            <h2>Why Choose Us</h2>
+            <h2>{homeContent?.sectionTitles?.whyChooseUs || 'Why Choose Us'}</h2>
             <div className="features-grid">
               {homeContent?.whyChooseUs && homeContent.whyChooseUs.length > 0 ? (
                 homeContent.whyChooseUs.sort((a, b) => a.order - b.order).map((item, index) => (
@@ -115,7 +115,7 @@ const Home = () => {
         {/* Our Commitments Section */}
         <section className="commitments-section">
           <div className="container">
-            <h2>Our Commitments</h2>
+            <h2>{homeContent?.sectionTitles?.commitments || 'Our Commitments'}</h2>
             <div className="commitments-grid">
               {homeContent?.commitments && homeContent.commitments.length > 0 ? (
                 homeContent.commitments.sort((a, b) => a.order - b.order).map((item, index) => (
