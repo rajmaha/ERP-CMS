@@ -80,7 +80,7 @@ const AdminSettings = () => {
     enableSocialSharing: false,
     maintenanceMode: false,
     facebookPageId: '',
-    facebookPageAccessToken: ''
+    facebookPageAccessToken: '',
     twitterApiKey: '',
     twitterApiSecret: '',
     twitterAccessToken: '',
