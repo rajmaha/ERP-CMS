@@ -99,3 +99,6 @@ package-lock.json
 yarn.lock
 pnpm-lock.yaml
 
+# Client lockfile is committed so the Docker build can use `npm ci`
+!client/package-lock.json
+
