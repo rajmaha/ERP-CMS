@@ -9,12 +9,13 @@ WORKDIR /app/client
 COPY client/package*.json ./
 
 # Install client dependencies
-RUN npm install --only=production
+RUN npm ci --omit=dev
 
 # Copy client source
 COPY client/ ./
 
 # Build React app
+ENV DISABLE_ESLINT_PLUGIN=true
 RUN npm run build
 
 # Stage 2: Setup Node.js backend
